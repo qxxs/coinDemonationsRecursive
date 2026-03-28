@@ -7,7 +7,8 @@ const { handleCommand } = require("./commands");
 const { handlePaginationButton } = require("./interactions/pagination");
 
 const token = process.env.DISCORD_TOKEN;
-const port = Number(process.env.PORT || 0);
+const isRender = String(process.env.RENDER || "").toLowerCase() === "true";
+const port = Number(process.env.PORT || (isRender ? 10000 : 0));
 
 if (!token) {
   console.error("Missing DISCORD_TOKEN in environment.");
@@ -78,8 +79,8 @@ if (Number.isInteger(port) && port > 0) {
     res.end("Bot is running.");
   });
 
-  server.listen(port, () => {
-    console.log(`Health server listening on port ${port}`);
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`Health server listening on 0.0.0.0:${port}`);
   });
 }
 
