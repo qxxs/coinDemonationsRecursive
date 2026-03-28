@@ -1,4 +1,5 @@
 require("dotenv").config();
+const http = require("node:http");
 const { Client, GatewayIntentBits, Events } = require("discord.js");
 const { createRobloxService } = require("./services/roblox");
 const { RobloxAPI } = require("./services/roblox_api");
@@ -6,6 +7,7 @@ const { handleCommand } = require("./commands");
 const { handlePaginationButton } = require("./interactions/pagination");
 
 const token = process.env.DISCORD_TOKEN;
+const port = Number(process.env.PORT || 0);
 
 if (!token) {
   console.error("Missing DISCORD_TOKEN in environment.");
@@ -62,5 +64,23 @@ client.on(Events.InteractionCreate, async (interaction) => {
 client.on(Events.Error, (error) => {
   console.error("Discord client error:", error);
 });
+
+// Render Web Services require an open port. For worker-style runs, PORT is usually unset.
+if (Number.isInteger(port) && port > 0) {
+  const server = http.createServer((req, res) => {
+    if (req.url === "/health") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: true, service: "roblox-discord-bot" }));
+      return;
+    }
+
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Bot is running.");
+  });
+
+  server.listen(port, () => {
+    console.log(`Health server listening on port ${port}`);
+  });
+}
 
 client.login(token);
