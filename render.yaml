@@ -1,0 +1,23 @@
+services:
+  - type: worker
+    name: roblox-discord-bot
+    runtime: node
+    plan: starter
+    autoDeploy: true
+    buildCommand: npm ci
+    startCommand: npm run deploy-commands && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: DISCORD_PUBLIC_KEY
+        sync: false
+      - key: DISCORD_CLIENT_SECRET
+        sync: false
+      - key: DISCORD_GUILD_ID
+        sync: false
+      - key: ROBLOX_COOKIE
+        sync: false

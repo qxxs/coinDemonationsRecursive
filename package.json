@@ -1,0 +1,26 @@
+{
+  "name": "coindemonationsrecursive",
+  "version": "1.0.0",
+  "description": "Starter Discord bot using discord.js",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "deploy-commands": "node src/deploy-commands.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qxxs/coinDemonationsRecursive.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/qxxs/coinDemonationsRecursive/issues"
+  },
+  "homepage": "https://github.com/qxxs/coinDemonationsRecursive#readme",
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.3.1"
+  }
+}
